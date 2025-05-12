@@ -9,6 +9,7 @@ public class HistoryClinical {
     private String treatment;
     private String diagnosis;
     private Date date;
+    private Pacient pacient;
 
     public Long getId() {
         return id;
@@ -56,5 +57,13 @@ public class HistoryClinical {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Pacient getPacient() {
+        return pacient;
+    }
+
+    public void setPacient(Pacient pacient) {
+        this.pacient = pacient;
     }
 }

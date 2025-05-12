@@ -53,6 +53,11 @@
         WHERE ID = #{id}
     </update>
 
+    <update id="updateAppoimentStatus" parameterType="Appoiment">
+        UPDATE APPOINTMENT SET STATUS = #{status}
+        WHERE ID = #{id}
+    </update>
+
     <delete id="deleteAppoiment" parameterType="long">
         DELETE FROM APPOINTMENT WHERE ID = #{id}
     </delete>

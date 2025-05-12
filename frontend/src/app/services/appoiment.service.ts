@@ -62,4 +62,8 @@ export class AppoimentService {
     return this.http.put<Appoiment>(`${this.apiUrl}/${appoiment.id}`, appoiment);
   }
 
+  updateAppoimentStatus(appoiment: Appoiment): Observable<Appoiment> {
+    return this.http.patch<Appoiment>(`${this.apiUrl}/${appoiment.id}`, appoiment);
+  }
+
 }

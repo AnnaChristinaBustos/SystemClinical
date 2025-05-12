@@ -2,6 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.clinicalAppointmentapp.mapper.HistoryClinicalMapper">
+    <resultMap id="HistoralWithPacient" type="HistoryClinical">
+        <id property="id" column="clinical_id"/>
+        <result property="treatment" column="clinical_treatment"/>
+        <result property="diagnosis" column="clinical_diagnosis"/>
+        <result property="date" column="clinical_date"/>
+        <association property="pacient" javaType="Pacient">
+            <result property="name" column="pacient_name"/>
+        </association>
+    </resultMap>
+
+    <select id="findAllByPacient" parameterType="long" resultMap="HistoralWithPacient">
+        SELECT
+            HISTORY_CLINICAL.ID AS clinical_id,
+            HISTORY_CLINICAL.TREATMENT AS clinical_treatment,
+            HISTORY_CLINICAL.DIAGNOSIS AS clinical_diagnosis,
+            HISTORY_CLINICAL.DATE AS clinical_date,
+            CONCAT(PACIENT.NAME, ' ', PACIENT.LASTNAME, ' ', PACIENT.SURNAME) AS pacient_name
+        FROM HISTORY_CLINICAL
+                 INNER JOIN PACIENT ON PACIENT.ID = HISTORY_CLINICAL.ID_PACIENT
+        WHERE PACIENT.ID = #{id};
+    </select>
+
     <select id="getHistoryClinical" resultType="HistoryClinical">
         SELECT * FROM HISTORY_CLINICAL
     </select>
@@ -10,9 +32,9 @@
         SELECT * FROM HISTORY_CLINICAL WHERE ID = #{id}
     </select>
 
-    <select id="findAllByPacient" parameterType="long" resultType="HistoryClinical">
-        SELECT HISTORY_CLINICAL.* FROM HISTORY_CLINICAL INNER JOIN PACIENT ON PACIENT.ID = HISTORY_CLINICAL.ID_PACIENT  WHERE PACIENT.ID = #{id}
-    </select>
+<!--    <select id="findAllByPacient" parameterType="long" resultType="HistoryClinical">-->
+<!--        SELECT HISTORY_CLINICAL.* FROM HISTORY_CLINICAL INNER JOIN PACIENT ON PACIENT.ID = HISTORY_CLINICAL.ID_PACIENT  WHERE PACIENT.ID = #{id}-->
+<!--    </select>-->
 
     <insert id="saveHistoryClinical" parameterType="HistoryClinical" >
         INSERT INTO HISTORY_CLINICAL (ID_PACIENT,ID_DOCTOR,TREATMENT,DIAGNOSIS,DATE)

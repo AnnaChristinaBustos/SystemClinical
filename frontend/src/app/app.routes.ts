@@ -6,6 +6,7 @@ import { PacientListComponent } from './components/pacient-list/pacient-list.com
 import { AppoimentFormComponent } from './components/appoiment-form/appoiment-form.component';
 import { PacientFormComponent } from './components/pacient-form/pacient-form.component';
 import { AppoimentCheckComponent } from './components/appoiment-check/appoiment-check.component';
+import { HistoryListPacientComponent } from './components/history-list-pacient/history-list-pacient.component';
 
 
 
@@ -20,4 +21,5 @@ export const routes: Routes = [
   {path:'pacient/new',component:PacientFormComponent},
   {path:'pacient/edit/:id',component:PacientFormComponent},
   {path:'appoiment/check/:id',component:AppoimentCheckComponent},
+  {path:'history/clinical/:id',component:HistoryListPacientComponent},
 ];

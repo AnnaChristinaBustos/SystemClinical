@@ -10,6 +10,7 @@ public interface AppoimentMapper {
     List<Appoiment> findAllAppoiments();
     Appoiment findAppoimentById(Long id);
     List<Appoiment> findAllByDoctor(Long id);
+    void updateAppoimentStatus(Appoiment appoiment);
     void saveAppoiment(Appoiment appoiment);
     void updateAppoiment(Appoiment appoiment);
     void deleteAppoiment(Long id);

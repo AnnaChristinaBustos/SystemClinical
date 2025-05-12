@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/enviroments/enviroment';
+import { Pacient } from './pacient.service';
 
 
 export interface MedicalRecord {
@@ -11,6 +12,7 @@ export interface MedicalRecord {
   treatment: string;
   diagnosis: string;
   date: string;
+  pacient?: Pacient;
 }
 
 export interface ApiResponse {

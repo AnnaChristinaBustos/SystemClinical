@@ -54,7 +54,7 @@ public class PacientController {
         }
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<Object> updatePacient(@PathVariable Long id,@RequestBody Pacient pacient) {
         try{
             pacient.setId(id);

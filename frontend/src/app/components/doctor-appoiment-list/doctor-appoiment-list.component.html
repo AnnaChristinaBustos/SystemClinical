@@ -15,7 +15,7 @@
     <div>
       <div class="background-box">
         <h1 class="text-center empty-list-title mb-0">
-          <b>Dr.Bianca Maria Bustos</b>
+          <b>Dr.{{nameDoctor}}</b>
         </h1>
         <p class="text-center">
           <b>Historial de citas | Total:{{ appoiments.length }}</b>
@@ -51,7 +51,7 @@
                     <b>Motivo:</b> {{ appoiment.motive}}
                   </p>
                 </div>
-                <div class="my-2">
+                <div class="my-2" *ngIf="appoiment.status != 'Finalizada'" >
                   <button
                     class="btn btn-outline-danger btn-sm mx-2"
                     (click)="checkAppoiment(appoiment.id!)"

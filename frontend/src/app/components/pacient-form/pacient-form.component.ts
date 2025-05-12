@@ -19,6 +19,7 @@ export class PacientFormComponent {
     age: 0,
   };
   id?: number;
+  
 
   constructor(
     private pacientService: PacientService,
@@ -31,6 +32,7 @@ export class PacientFormComponent {
     if (this.id) {
       this.pacientService.getPacient(this.id).subscribe(data => {
         this.pacient = data;
+        
       });
     }
   }

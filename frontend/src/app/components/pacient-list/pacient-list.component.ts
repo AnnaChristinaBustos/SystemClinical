@@ -36,4 +36,8 @@ export class PacientListComponent implements OnInit {
     });
   }
 
+  getHistory(id:number): void {
+    this.router.navigate(['/history/clinical',id]);
+  }
+
 }

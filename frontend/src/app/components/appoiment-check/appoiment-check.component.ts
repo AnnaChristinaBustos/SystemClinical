@@ -36,6 +36,8 @@ export class AppoimentCheckComponent {
     date: '',
   };
 
+  patientNAme: string = '';
+
   medicalRecords: MedicalRecord[] = [];
 
   id?: number;
@@ -64,7 +66,17 @@ export class AppoimentCheckComponent {
       .getHistoryClinicalByPacient(this.appoiment.id_pacient)
       .subscribe((data) => {
         this.medicalRecords = data;
+        this.patientNAme =
+          this.medicalRecords[0].pacient?.name ?? 'Desconocido';
       });
+  }
+
+  updateAppoiment(): void {
+    console.log(this.appoiment, 'appoiment');
+    this.appoiment.status = 'Finalizada';
+    this.appoimentService.updateAppoiment(this.appoiment).subscribe(() => {
+      this.router.navigate(['/listDoctor']);
+    });
   }
 
   saveMedicalRecord(): void {
@@ -72,14 +84,11 @@ export class AppoimentCheckComponent {
     this.medicalRecord.id_pacient = this.appoiment.id_pacient;
     const now = new Date();
     this.medicalRecord.date = now.toISOString().slice(0, 16);
-    this.appoiment.status = 'Finalizada';
-    this.appoimentService.updateAppoiment(this.appoiment).subscribe(() => {
       this.historyClinicalService
         .saveHistoryClinical(this.medicalRecord)
         .subscribe(() => {
-          this.router.navigate(['/listDoctor']);
+          this.updateAppoiment();
         });
-    });
   }
   cancelMedicalRecord(): void {
     this.medicalRecord = {

@@ -80,13 +80,33 @@ public class AppoimentController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateAppoiment(@PathVariable Long id, @RequestBody Appoiment appoiment) {
         try{
-             appoiment = appoimentMapper.findAppoimentById(id);
+            Appoiment existingAppoiment = appoimentMapper.findAppoimentById(id);
+            if (existingAppoiment == null) {
+                return response.buildNotFoundResponse("Cita no encontrada");
+            }
+            
             if (appoiment == null) {
                 return response.buildNotFoundResponse("Cita no encontrada");
             }
             appoiment.setId(id);
             appoimentMapper.updateAppoiment(appoiment);
             return response.buildSuccessResponse("Se edito correctamente la cita",null);
+        }catch (Exception e){
+            return response.buildErrorResponse("Ocurrio un error");
+        }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Object> updateAppoimentStatus(@PathVariable Long id, @RequestBody Appoiment appoiment) {
+        try{
+            Appoiment existingAppoiment = appoimentMapper.findAppoimentById(id);
+            if (existingAppoiment == null) {
+                return response.buildNotFoundResponse("Cita no encontrada");
+            }
+
+            appoiment.setId(id);
+            appoimentMapper.updateAppoimentStatus(appoiment);
+            return response.buildSuccessResponse("Se edito correctamente el estado de la cita",null);
         }catch (Exception e){
             return response.buildErrorResponse("Ocurrio un error");
         }

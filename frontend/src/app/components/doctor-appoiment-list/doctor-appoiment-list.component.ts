@@ -16,6 +16,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 })
 export class DoctorAppoimentListComponent implements OnInit {
   appoiments: AppointmentList[] = [];
+  nameDoctor: string = '';
   constructor(
     private appoimentService: AppoimentService,
     private route: ActivatedRoute,
@@ -41,6 +42,7 @@ export class DoctorAppoimentListComponent implements OnInit {
             doctor: { name: a.doctor?.name ?? 'Desconocido' },
             pacient: { name: a.pacient?.name ?? 'Desconocido' },
           }));
+          this.nameDoctor= this.appoiments[0].doctor.name;
       });
   }
 
