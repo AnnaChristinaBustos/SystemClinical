@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.clinicalAppointmentapp.mapper.DoctorMapper">
+
+    <select id="findAllDoctors" resultType="com.example.clinicalAppointmentapp.model.Doctor">
+        SELECT * FROM DOCTOR
+    </select>
+
+    <select id="findDoctorById" parameterType="long" resultType="com.example.clinicalAppointmentapp.model.Doctor">
+        SELECT * FROM DOCTOR WHERE ID = #{id}
+    </select>
+
+    <insert id="saveDoctor" parameterType="Doctor" >
+        INSERT INTO DOCTOR (NAME,SURNAME,LASTNAME,SPECIALIZATION)
+        VALUES (#{name},#{surname},#{lastname},#{specialization})
+    </insert>
+
+    <update id="updateDoctor" parameterType="Doctor" >
+        UPDATE DOCTOR SET NAME = #{name},SURNAME = #{surname},LASTNAME = #{lastname},SPECIALIZATION = #{specialization}
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="deleteDoctor" parameterType="long">
+        DELETE FROM DOCTOR WHERE ID = #{id}
+    </delete>
+
+</mapper>

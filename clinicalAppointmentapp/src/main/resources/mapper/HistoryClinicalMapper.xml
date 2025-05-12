@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.clinicalAppointmentapp.mapper.HistoryClinicalMapper">
+    <select id="getHistoryClinical" resultType="HistoryClinical">
+        SELECT * FROM HISTORY_CLINICAL
+    </select>
+
+    <select id="findHistoryClinicalById" parameterType="long" resultType="HistoryClinical">
+        SELECT * FROM HISTORY_CLINICAL WHERE ID = #{id}
+    </select>
+
+    <select id="findAllByPacient" parameterType="long" resultType="HistoryClinical">
+        SELECT HISTORY_CLINICAL.* FROM HISTORY_CLINICAL INNER JOIN PACIENT ON PACIENT.ID = HISTORY_CLINICAL.ID_PACIENT  WHERE PACIENT.ID = #{id}
+    </select>
+
+    <insert id="saveHistoryClinical" parameterType="HistoryClinical" >
+        INSERT INTO HISTORY_CLINICAL (ID_PACIENT,ID_DOCTOR,TREATMENT,DIAGNOSIS,DATE)
+        VALUES (#{id_pacient},#{id_doctor},#{treatment},#{diagnosis},#{date})
+    </insert>
+
+    <update id="updateHistoryClinical" parameterType="HistoryClinical">
+        UPDATE HISTORY_CLINICAL SET ID_PACIENT = #{id_pacient},ID_DOCTOR = #{id_doctor},TREATMENT = #{treatment},DIAGNOSIS = #{diagnosis},DATE = #{date}
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="deleteHistoryClinical" parameterType="long">
+        DELETE FROM HISTORY_CLINICAL WHERE ID = #{id}
+    </delete>
+</mapper>

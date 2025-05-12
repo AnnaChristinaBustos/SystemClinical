@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.clinicalAppointmentapp.mapper.AppoimentMapper">
+    <resultMap id="AppoimentWithDoctorAndPacient" type="Appoiment">
+        <id property="id" column="id_appo"/>
+        <result property="motive" column="motive_appo"/>
+        <result property="status" column="status_appo"/>
+        <result property="date" column="date_appo"/>
+        <association property="doctor" javaType="Doctor">
+            <result property="name" column="doctor_name"/>
+        </association>
+        <association property="pacient" javaType="Pacient">
+            <result property="name" column="pacient_name"/>
+        </association>
+    </resultMap>
+
+    <select id="findAllByDoctor" resultMap="AppoimentWithDoctorAndPacient">
+        SELECT
+            APPOINTMENT.ID AS id_appo,
+            APPOINTMENT.MOTIVE AS motive_appo,
+            APPOINTMENT.STATUS AS status_appo,
+            APPOINTMENT.DATE AS date_appo,
+            CONCAT(DOCTOR.NAME, ' ', DOCTOR.LASTNAME, ' ', DOCTOR.SURNAME) AS doctor_name,
+            CONCAT(PACIENT.NAME, ' ', PACIENT.LASTNAME, ' ', PACIENT.SURNAME) AS pacient_name
+        FROM APPOINTMENT
+                 INNER JOIN DOCTOR ON DOCTOR.ID = APPOINTMENT.ID_DOCTOR
+                 INNER JOIN PACIENT ON PACIENT.ID = APPOINTMENT.ID_PACIENT
+        WHERE DOCTOR.ID = #{id};
+    </select>
+
+
+
+    <select id="findAllAppoiments" resultType="Appoiment">
+        SELECT * FROM APPOINTMENT
+    </select>
+
+    <select id="findAppoimentById" parameterType="long" resultType="Appoiment">
+        SELECT * FROM APPOINTMENT WHERE ID = #{id}
+    </select>
+
+<!--    <select id="findAllByDoctor" parameterType="long" resultType="Appoiment">-->
+<!--        SELECT APPOINTMENT.* FROM APPOINTMENT INNER JOIN DOCTOR ON DOCTOR.ID = APPOINTMENT.ID_DOCTOR WHERE DOCTOR.ID = #{id};-->
+<!--    </select>-->
+
+    <insert id="saveAppoiment" parameterType="Appoiment" >
+        INSERT INTO APPOINTMENT (DATE,ID_DOCTOR,ID_PACIENT,MOTIVE,STATUS)
+        VALUES (#{date},#{id_doctor},#{id_pacient},#{motive},#{status})
+    </insert>
+
+    <update id="updateAppoiment" parameterType="Appoiment">
+        UPDATE APPOINTMENT SET DATE = #{date},ID_DOCTOR = #{id_doctor},ID_PACIENT = #{id_pacient},MOTIVE = #{motive},STATUS = #{status}
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="deleteAppoiment" parameterType="long">
+        DELETE FROM APPOINTMENT WHERE ID = #{id}
+    </delete>
+</mapper>
